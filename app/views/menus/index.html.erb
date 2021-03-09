@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Menus</h1>
+<% if current_user.role === "admin" %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @menus.each do |menu| %>
+        <tr>
+          <td><%= menu.name %></td>
+          <td><%= link_to 'Show', menu %></td>
+          <td><%= link_to 'Edit', edit_menu_path(menu) %></td>
+          <td><%= link_to 'Destroy', menu, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+  <% if can? :create, Menu %>
+    <%= link_to 'New Menu', new_menu_path %>
+  <% end %>
+  <br>
+  <br>
+
+  <%= link_to 'Items', items_path %>
+<% else %>
+  <% @menus.each do |menu| %>
+    <div>
+      <%= menu.name %>
+    </div>
+    <div>
+      <% menu.items.each do |item| %>
+        <div>
+          <%= item.title %>
+          <%= item.price %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
